@@ -114,89 +114,85 @@ public class SinglyLinkedList implements LinkedList{
             currentNode = currentNode.pointer;
         }
     }
-
+        
     @Override
     public Object get(int index) {
-        if (index < 0 || index >= size) {
-            return null;
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException();
         }
-
         Node currentNode = head;
-
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i <index; i++){
             currentNode = currentNode.pointer;
         }
-
         return currentNode.data;
     }
-
+    
     @Override
     public int indexOf(Object targetData) {
         Node currentNode = head;
         int index = 0;
-
-        while (currentNode != null) {
-            if (currentNode.data.equals(targetData)) {
+        while(currentNode!=null){
+            if(currentNode.data.equals(targetData)){
                 return index;
             }
-
             currentNode = currentNode.pointer;
             index++;
         }
-
         return -1;
     }
-
+    
     @Override
     public void printReverse() {
-        Object[] dataArray = toArray();
-
-        for (int i = size - 1; i >= 0; i--) {
+        if(head == null){
+            return;
+        }
+        
+        Node currentNode = head;
+        Object[] dataArray = new Object[size];
+        for (int i = 0; i < size; i++){
+            dataArray[i] = currentNode.data;
+            currentNode = currentNode.pointer;
+        }
+        
+        for(int i=size-1;i>=0;i--){
             System.out.println(dataArray[i]);
         }
     }
-
+    
     @Override
     public boolean remove(Object targetData) {
-        if (isEmpty()) {
+        if(isEmpty()){
             return false;
         }
-
-        if (head.data.equals(targetData)) {
+        
+        if(head.data.equals(targetData)){
             deleteFirst();
             return true;
         }
-
+        
         Node currentNode = head;
-
-        while (currentNode.pointer != null) {
-            if (currentNode.pointer.data.equals(targetData)) {
-                if (currentNode.pointer == tail) {
+        while(currentNode.pointer!=null){
+            if (currentNode.pointer.data.equals(targetData)){
+                if(currentNode.pointer==tail){
                     tail = currentNode;
                 }
-
                 currentNode.pointer = currentNode.pointer.pointer;
                 size--;
-
                 return true;
             }
-
             currentNode = currentNode.pointer;
         }
-
         return false;
     }
-
+    
     @Override
     public Object[] toArray() {
         Object[] dataArray = new Object[size];
         Node currentNode = head;
-
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i <size; i++){
             dataArray[i] = currentNode.data;
             currentNode = currentNode.pointer;
         }
-
         return dataArray;
     }
 }
